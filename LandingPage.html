@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carbón — Cocina de Fuego | Rosario</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Barlow:wght@300;400;500&family=Barlow+Condensed:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #080706;
+  --charcoal: #111010;
+  --surface: #1a1816;
+  --surface2: #221f1c;
+  --border: #2e2a26;
+  --gold: #c9a84c;
+  --gold2: #e8c97a;
+  --ember: #d4470a;
+  --cream: #f2ece3;
+  --muted: #7a6f65;
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-sans: 'Barlow', sans-serif;
+  --font-cond: 'Barlow Condensed', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--cream);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+/* ══════════════════════════════════
+   NAV
+══════════════════════════════════ */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 48px;
+  transition: all 0.4s;
+}
+
+nav.scrolled {
+  background: rgba(8,7,6,0.95);
+  backdrop-filter: blur(12px);
+  padding: 16px 48px;
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: var(--font-cond);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--cream); }
+
+.nav-cta {
+  font-family: var(--font-cond);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 9px 22px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.nav-cta:hover { background: var(--gold); color: var(--black); }
+
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+.hamburger span { width: 24px; height: 1px; background: var(--cream); transition: all 0.3s; }
+
+@media(max-width: 768px) {
+  nav { padding: 20px 24px; }
+  nav.scrolled { padding: 14px 24px; }
+  .nav-links, .nav-cta { display: none; }
+  .hamburger { display: flex; }
+}
+
+/* ══════════════════════════════════
+   HERO
+══════════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Simulated atmospheric background */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 80%, rgba(212,71,10,0.18) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(201,168,76,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(26,24,22,0.6) 0%, transparent 70%),
+    linear-gradient(160deg, #0d0b09 0%, #1a1410 40%, #0a0807 100%);
+}
+
+/* Animated ember particles */
+.embers {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ember {
+  position: absolute;
+  bottom: -10px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--ember);
+  animation: rise linear infinite;
+  opacity: 0;
+}
+
+@keyframes rise {
+  0%   { transform: translateY(0) translateX(0); opacity: 0; }
+  10%  { opacity: 0.8; }
+  90%  { opacity: 0.3; }
+  100% { transform: translateY(-100vh) translateX(var(--drift)); opacity: 0; }
+}
+
+.hero-content {
+  position: relative;
+  text-align: center;
+  padding: 0 24px;
+  animation: heroIn 1.2s cubic-bezier(0.22,1,0.36,1) both;
+}
+
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.hero-eyebrow {
+  font-family: var(--font-cond);
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.hero-eyebrow::before,
+.hero-eyebrow::after {
+  content: '';
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.5;
+}
+
+.hero h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(4rem, 12vw, 9rem);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+  margin-bottom: 24px;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--gold);
+  display: block;
+}
+
+.hero-tagline {
+  font-family: var(--font-serif);
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--muted);
+  margin-bottom: 48px;
+  letter-spacing: 0.04em;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  font-family: var(--font-cond);
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 16px 36px;
+  background: var(--gold);
+  color: var(--black);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.2s;
+  font-weight: 600;
+}
+
+.btn-primary:hover { background: var(--gold2); transform: translateY(-2px); }
+
+.btn-ghost {
+  font-family: var(--font-cond);
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 16px 36px;
+  background: transparent;
+  color: var(--cream);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.2s;
+}
+
+.btn-ghost:hover { border-color: var(--cream); }
+
+.hero-scroll {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-family: var(--font-cond);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+
+@keyframes scrollBounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(6px); }
+}
+
+.hero-scroll::after {
+  content: '';
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+}
+
+/* ══════════════════════════════════
+   SECTIONS BASE
+══════════════════════════════════ */
+section { padding: 100px 0; }
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+@media(max-width: 768px) { .container { padding: 0 24px; } }
+
+.section-label {
+  font-family: var(--font-cond);
+  font-size: 0.68rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.section-label::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.section-title em { font-style: italic; color: var(--gold); }
+
+/* ══════════════════════════════════
+   STORY / NOSOTROS
+══════════════════════════════════ */
+.story {
+  background: var(--charcoal);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.story-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+@media(max-width: 768px) { .story-grid { grid-template-columns: 1fr; gap: 40px; } }
+
+.story-visual {
+  position: relative;
+  height: 500px;
+}
+
+.story-img-main {
+  width: 75%;
+  height: 420px;
+  background: linear-gradient(135deg, #1e1a16 0%, #2a1f14 50%, #1a1208 100%);
+  position: absolute;
+  top: 0; right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  border: 1px solid var(--border);
+}
+
+.story-img-accent {
+  width: 55%;
+  height: 240px;
+  background: linear-gradient(135deg, #2a1f14 0%, #1e1a16 100%);
+  position: absolute;
+  bottom: 0; left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  border: 1px solid var(--border);
+  z-index: 2;
+}
+
+.story-img-main::after,
+.story-img-accent::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: 12px; right: 14px;
+  font-family: var(--font-cond);
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.story-text p {
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: #9a8f84;
+  margin-bottom: 20px;
+  font-weight: 300;
+}
+
+.story-text p strong { color: var(--cream); font-weight: 400; }
+
+.story-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+}
+
+.stat-num {
+  font-family: var(--font-serif);
+  font-size: 2.4rem;
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.stat-label {
+  font-family: var(--font-cond);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ══════════════════════════════════
+   MENU DESTACADO
+══════════════════════════════════ */
+.menu-section { background: var(--black); }
+
+.menu-intro {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 60px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+@media(max-width: 768px) { .menu-grid { grid-template-columns: 1fr; } }
+
+.menu-card {
+  background: var(--charcoal);
+  padding: 36px 28px;
+  transition: background 0.3s;
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+
+.menu-card::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--ember), var(--gold));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.menu-card:hover { background: var(--surface); }
+.menu-card:hover::before { transform: scaleX(1); }
+
+.menu-card-cat {
+  font-family: var(--font-cond);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ember);
+  margin-bottom: 14px;
+}
+
+.menu-card-name {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.menu-card-desc {
+  font-size: 0.83rem;
+  line-height: 1.7;
+  color: var(--muted);
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+
+.menu-card-price {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  color: var(--gold);
+  font-weight: 300;
+}
+
+/* ══════════════════════════════════
+   RESERVAS
+══════════════════════════════════ */
+.reservas {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.reservas-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+@media(max-width: 768px) { .reservas-grid { grid-template-columns: 1fr; gap: 40px; } }
+
+.reservas-info p {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #9a8f84;
+  font-weight: 300;
+  margin-bottom: 32px;
+}
+
+.horario-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-cond);
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+}
+
+.horario-item .dia { color: var(--muted); text-transform: uppercase; }
+.horario-item .hora { color: var(--cream); }
+.horario-item .cerrado { color: var(--ember); }
+
+.form-group { margin-bottom: 18px; }
+
+.form-group label {
+  display: block;
+  font-family: var(--font-cond);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--cream);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 300;
+  padding: 13px 16px;
+  outline: none;
+  transition: border-color 0.2s;
+  appearance: none;
+  border-radius: 0;
+}
+
+.form-group input:focus,
+.form-group select:focus { border-color: var(--gold); }
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media(max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+
+.form-group select option { background: var(--surface2); }
+
+/* ══════════════════════════════════
+   TESTIMONIOS
+══════════════════════════════════ */
+.testimonios { background: var(--black); }
+
+.testimonios-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 56px;
+}
+
+@media(max-width: 768px) { .testimonios-grid { grid-template-columns: 1fr; } }
+
+.testimonio-card {
+  background: var(--charcoal);
+  border: 1px solid var(--border);
+  padding: 32px 28px;
+  position: relative;
+  transition: border-color 0.3s;
+}
+
+.testimonio-card:hover { border-color: var(--gold); }
+
+.stars {
+  color: var(--gold);
+  font-size: 0.85rem;
+  letter-spacing: 3px;
+  margin-bottom: 16px;
+}
+
+.testimonio-text {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  line-height: 1.7;
+  color: #c5bbb2;
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+
+.testimonio-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.author-avatar {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+}
+
+.author-name {
+  font-family: var(--font-cond);
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cream);
+  margin-bottom: 2px;
+}
+
+.author-date {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+/* ══════════════════════════════════
+   UBICACIÓN
+══════════════════════════════════ */
+.ubicacion {
+  background: var(--charcoal);
+  border-top: 1px solid var(--border);
+}
+
+.ubicacion-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+@media(max-width: 768px) { .ubicacion-grid { grid-template-columns: 1fr; } }
+
+.mapa-placeholder {
+  height: 380px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+  color: var(--muted);
+  font-family: var(--font-cond);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+}
+
+.mapa-placeholder::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 39px, var(--border) 39px, var(--border) 40px),
+    repeating-linear-gradient(90deg, transparent, transparent 39px, var(--border) 39px, var(--border) 40px);
+  opacity: 0.3;
+}
+
+.mapa-pin { font-size: 2.5rem; position: relative; }
+
+.info-item {
+  display: flex;
+  gap: 16px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.info-item:last-child { border-bottom: none; }
+
+.info-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  width: 32px;
+  margin-top: 2px;
+}
+
+.info-label {
+  font-family: var(--font-cond);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.info-value {
+  font-size: 0.95rem;
+  color: var(--cream);
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+/* ══════════════════════════════════
+   FOOTER
+══════════════════════════════════ */
+footer {
+  background: var(--black);
+  border-top: 1px solid var(--border);
+  padding: 48px 0;
+}
+
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.footer-logo {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  color: var(--gold);
+  letter-spacing: 0.06em;
+}
+
+.footer-copy {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-weight: 300;
+}
+
+.footer-dev {
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-family: var(--font-cond);
+  letter-spacing: 0.08em;
+}
+
+.footer-dev a { color: var(--gold); text-decoration: none; }
+.footer-dev a:hover { text-decoration: underline; }
+
+/* ══════════════════════════════════
+   TOAST
+══════════════════════════════════ */
+.toast {
+  position: fixed;
+  bottom: 28px; right: 28px;
+  background: var(--surface2);
+  border: 1px solid var(--gold);
+  color: var(--cream);
+  padding: 14px 22px;
+  font-family: var(--font-cond);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  transform: translateY(80px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.22,1,0.36,1);
+  z-index: 500;
+}
+
+.toast.show { transform: translateY(0); opacity: 1; }
+
+/* ══════════════════════════════════
+   REVEAL ANIMATION
+══════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Carbón</a>
+  <ul class="nav-links">
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#menu">Menú</a></li>
+    <li><a href="#reservas">Reservas</a></li>
+    <li><a href="#ubicacion">Ubicación</a></li>
+  </ul>
+  <a href="#reservas" class="nav-cta">Reservar mesa</a>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="embers" id="embers"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Cocina de fuego · Rosario</div>
+    <h1>Car<em>bón</em></h1>
+    <p class="hero-tagline">Donde el fuego es el único ingrediente que no cambia</p>
+    <div class="hero-actions">
+      <a href="#reservas" class="btn-primary">Reservar mesa</a>
+      <a href="#menu" class="btn-ghost">Ver menú</a>
+    </div>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- NOSOTROS -->
+<section class="story" id="nosotros">
+  <div class="container">
+    <div class="story-grid">
+      <div class="story-visual">
+        <div class="story-img-main" data-label="Cocina abierta">🔥</div>
+        <div class="story-img-accent" data-label="Desde 2019">🥩</div>
+      </div>
+      <div class="story-text reveal">
+        <div class="section-label">Nuestra historia</div>
+        <h2 class="section-title" style="margin-bottom:28px">El fuego como <em>filosofía</em></h2>
+        <p>Carbón nació en 2019 de una obsesión simple: <strong>cocinar con fuego real</strong>. Sin atajos, sin hornos industriales. Cada corte se prepara sobre brasas de quebracho colorado traído desde el Chaco.</p>
+        <p>Nuestro menú cambia con las estaciones. Lo que no cambia es el compromiso con los productores locales y la técnica que aprendimos durante años viajando por las parrillas de Mendoza, Salta y el interior de Santa Fe.</p>
+        <p>El salón fue diseñado para que <strong>el fuego sea el protagonista</strong>: la cocina abierta permite ver cada preparación desde cualquier mesa.</p>
+        <div class="story-stats">
+          <div>
+            <div class="stat-num">5+</div>
+            <div class="stat-label">Años de fuego</div>
+          </div>
+          <div>
+            <div class="stat-num">12</div>
+            <div class="stat-label">Productores locales</div>
+          </div>
+          <div>
+            <div class="stat-num">48</div>
+            <div class="stat-label">Cubiertos</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENÚ -->
+<section class="menu-section" id="menu">
+  <div class="container">
+    <div class="menu-intro reveal">
+      <div>
+        <div class="section-label">Carta</div>
+        <h2 class="section-title">Lo que <em>sale del fuego</em></h2>
+      </div>
+      <a href="#" class="btn-ghost" style="white-space:nowrap">Menú completo →</a>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-card reveal">
+        <div class="menu-card-cat">Para empezar</div>
+        <div class="menu-card-name">Provoleta al rescoldo</div>
+        <div class="menu-card-desc">Queso provolone madurado 90 días, enterrado en brasas con romero y ajo negro.</div>
+        <div class="menu-card-price">$4.800</div>
+      </div>
+      <div class="menu-card reveal">
+        <div class="menu-card-cat">Destacado del chef</div>
+        <div class="menu-card-name">Bife de chorizo a la piedra</div>
+        <div class="menu-card-desc">500g de novillo angus, maduración 21 días, sal patagónica y manteca de hierbas.</div>
+        <div class="menu-card-price">$12.400</div>
+      </div>
+      <div class="menu-card reveal">
+        <div class="menu-card-cat">Del huerto</div>
+        <div class="menu-card-name">Vegetales de temporada</div>
+        <div class="menu-card-desc">Selección del día de productores de Zavalla, grillados con aceite de oliva y vinagre de manzana.</div>
+        <div class="menu-card-price">$3.600</div>
+      </div>
+      <div class="menu-card reveal">
+        <div class="menu-card-cat">Clásico</div>
+        <div class="menu-card-name">Entraña mariposa</div>
+        <div class="menu-card-desc">Corte abierto al medio, cocción lenta sobre quebracho. Con chimichurri de la casa.</div>
+        <div class="menu-card-price">$9.200</div>
+      </div>
+      <div class="menu-card reveal">
+        <div class="menu-card-cat">Para compartir</div>
+        <div class="menu-card-name">Tabla Carbón</div>
+        <div class="menu-card-desc">Selección de tres cortes + achuras + dos guarniciones. Para dos personas.</div>
+        <div class="menu-card-price">$19.800</div>
+      </div>
+      <div class="menu-card reveal">
+        <div class="menu-card-cat">Para cerrar</div>
+        <div class="menu-card-name">Brownie a la brasa</div>
+        <div class="menu-card-desc">Terminado sobre brasas bajas, con helado de dulce de leche artesanal y sal en escamas.</div>
+        <div class="menu-card-price">$2.800</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESERVAS -->
+<section class="reservas" id="reservas">
+  <div class="container">
+    <div class="reservas-grid">
+      <div class="reveal">
+        <div class="section-label">Horarios</div>
+        <h2 class="section-title" style="margin-bottom:28px">Reservá tu <em>lugar</em></h2>
+        <p>Recomendamos reservar con al menos 48 horas de anticipación, especialmente para fines de semana. El salón tiene capacidad para 48 cubiertos.</p>
+        <div>
+          <div class="horario-item"><span class="dia">Lunes — Martes</span><span class="cerrado">Cerrado</span></div>
+          <div class="horario-item"><span class="dia">Miércoles — Jueves</span><span class="hora">20:00 — 00:00</span></div>
+          <div class="horario-item"><span class="dia">Viernes</span><span class="hora">20:00 — 01:00</span></div>
+          <div class="horario-item"><span class="dia">Sábado</span><span class="hora">13:00 — 16:00 · 20:00 — 01:00</span></div>
+          <div class="horario-item"><span class="dia">Domingo</span><span class="hora">13:00 — 17:00</span></div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" placeholder="Tu nombre">
+          </div>
+          <div class="form-group">
+            <label>Apellido</label>
+            <input type="text" placeholder="Tu apellido">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Fecha</label>
+            <input type="date">
+          </div>
+          <div class="form-group">
+            <label>Hora</label>
+            <select>
+              <option>20:00</option>
+              <option>20:30</option>
+              <option>21:00</option>
+              <option>21:30</option>
+              <option>22:00</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Personas</label>
+            <select>
+              <option>1 persona</option>
+              <option>2 personas</option>
+              <option>3 personas</option>
+              <option>4 personas</option>
+              <option>5 — 6 personas</option>
+              <option>7+ personas</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Teléfono</label>
+            <input type="tel" placeholder="+54 341...">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Ocasión especial</label>
+          <select>
+            <option value="">Ninguna</option>
+            <option>Cumpleaños</option>
+            <option>Aniversario</option>
+            <option>Cena de negocios</option>
+            <option>Otra</option>
+          </select>
+        </div>
+        <button class="btn-primary" style="width:100%;margin-top:4px" onclick="submitReserva()">Confirmar reserva</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section class="testimonios" id="testimonios">
+  <div class="container">
+    <div class="reveal" style="text-align:center;max-width:500px;margin:0 auto 0">
+      <div class="section-label" style="justify-content:center">Lo que dicen</div>
+      <h2 class="section-title">Opiniones de <em>nuestros comensales</em></h2>
+    </div>
+    <div class="testimonios-grid">
+      <div class="testimonio-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testimonio-text">"La entraña fue una experiencia religiosa. El fuego se siente en cada bocado, no es marketing. Volvimos tres veces en dos meses."</p>
+        <div class="testimonio-author">
+          <div class="author-avatar">👤</div>
+          <div>
+            <div class="author-name">Martina Peralta</div>
+            <div class="author-date">Enero 2026 · Google</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonio-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testimonio-text">"El ambiente es impecable y la cocina abierta hace que la espera sea parte del show. El brownie a la brasa es ridículamente bueno."</p>
+        <div class="testimonio-author">
+          <div class="author-avatar">👤</div>
+          <div>
+            <div class="author-name">Rodrigo Ibáñez</div>
+            <div class="author-date">Diciembre 2025 · Google</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonio-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testimonio-text">"Reservé para mi aniversario y el equipo nos trató de manera increíble. El menú de temporada sorprende siempre. Lugar único en Rosario."</p>
+        <div class="testimonio-author">
+          <div class="author-avatar">👤</div>
+          <div>
+            <div class="author-name">Valentina Greco</div>
+            <div class="author-date">Noviembre 2025 · TripAdvisor</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- UBICACIÓN -->
+<section class="ubicacion" id="ubicacion">
+  <div class="container">
+    <div class="ubicacion-grid">
+      <div class="reveal">
+        <div class="section-label">Cómo llegar</div>
+        <h2 class="section-title" style="margin-bottom:36px">Encontranos en el <em>corazón</em> de Rosario</h2>
+        <div class="info-item">
+          <div class="info-icon">📍</div>
+          <div>
+            <div class="info-label">Dirección</div>
+            <div class="info-value">Córdoba 1240, esquina Entre Ríos<br>Rosario, Santa Fe</div>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">📞</div>
+          <div>
+            <div class="info-label">Reservas</div>
+            <div class="info-value">+54 341 555-0124<br>reservas@carbon-rosario.com</div>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">🚗</div>
+          <div>
+            <div class="info-label">Estacionamiento</div>
+            <div class="info-value">Playa en Córdoba 1260 (convenio)<br>$800/hora primeras 2 horas gratis</div>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">🚌</div>
+          <div>
+            <div class="info-label">Transporte público</div>
+            <div class="info-value">Líneas 101, 115, 142<br>Parada Córdoba y Entre Ríos</div>
+          </div>
+        </div>
+      </div>
+      <div class="mapa-placeholder reveal">
+        <div class="mapa-pin">📍</div>
+        <span>Córdoba 1240, Rosario</span>
+        <span style="font-size:0.62rem;opacity:0.6">Integrá Google Maps con tu API key</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">Carbón</div>
+      <div class="footer-copy">© 2026 Carbón Cocina de Fuego. Rosario, Argentina.</div>
+      <div class="footer-dev">Sitio desarrollado por <a href="mailto:vemiliano220@gmail.com">Emiliano Vega</a></div>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── NAV SCROLL ──
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ── HAMBURGER ──
+function toggleMenu() {
+  // Simple mobile toggle — in production expandir con panel lateral
+  const links = document.querySelector('.nav-links');
+  const cta = document.querySelector('.nav-cta');
+  if (links) { links.style.display = links.style.display === 'flex' ? 'none' : 'flex'; }
+}
+
+// ── EMBERS ──
+(function createEmbers() {
+  const container = document.getElementById('embers');
+  for (let i = 0; i < 18; i++) {
+    const e = document.createElement('div');
+    e.className = 'ember';
+    e.style.cssText = `
+      left: ${Math.random() * 100}%;
+      --drift: ${(Math.random() - 0.5) * 80}px;
+      animation-duration: ${4 + Math.random() * 6}s;
+      animation-delay: ${Math.random() * 8}s;
+      width: ${1.5 + Math.random() * 3}px;
+      height: ${1.5 + Math.random() * 3}px;
+      background: ${Math.random() > 0.5 ? '#d4470a' : '#c9a84c'};
+      box-shadow: 0 0 ${2 + Math.random() * 4}px currentColor;
+    `;
+    container.appendChild(e);
+  }
+})();
+
+// ── SCROLL REVEAL ──
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── RESERVA ──
+function submitReserva() {
+  const nombre = document.querySelector('input[placeholder="Tu nombre"]').value;
+  const fecha  = document.querySelector('input[type="date"]').value;
+  if (!nombre || !fecha) { showToast('Completá nombre y fecha para continuar'); return; }
+  showToast('✓ Reserva recibida — Te confirmamos por WhatsApp');
+}
+
+// ── TOAST ──
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+</script>
+</body>
+</html>
