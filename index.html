@@ -880,9 +880,11 @@ footer {
         <div class="section-label">Carta</div>
         <h2 class="section-title">Lo que <em>sale del fuego</em></h2>
       </div>
-      <a href="#menu" class="btn-ghost" style="white-space:nowrap">Menú completo →</a>
+      <button class="btn-ghost" style="white-space:nowrap" onclick="toggleMenuCompleto(this)">Menú completo →</button>
     </div>
-    <div class="menu-grid">
+
+    <!-- DESTACADOS (siempre visibles) -->
+    <div class="menu-grid" id="menuDestacados">
       <div class="menu-card reveal">
         <div class="menu-card-cat">Para empezar</div>
         <div class="menu-card-name">Provoleta al rescoldo</div>
@@ -920,6 +922,115 @@ footer {
         <div class="menu-card-price">$2.800</div>
       </div>
     </div>
+
+    <!-- MENÚ COMPLETO (oculto hasta click) -->
+    <div id="menuCompleto" style="display:none; margin-top:32px;">
+
+      <!-- Separador -->
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:28px;">
+        <div style="flex:1;height:1px;background:var(--border)"></div>
+        <span style="font-family:var(--font-serif);font-style:italic;color:var(--muted);font-size:0.9rem">Carta completa</span>
+        <div style="flex:1;height:1px;background:var(--border)"></div>
+      </div>
+
+      <!-- ENTRADAS -->
+      <div style="margin-bottom:36px">
+        <div class="menu-card-cat" style="font-size:0.78rem;letter-spacing:0.18em;margin-bottom:16px;color:var(--ember)">── Entradas ──</div>
+        <div class="menu-grid">
+          <div class="menu-card">
+            <div class="menu-card-cat">Clásico</div>
+            <div class="menu-card-name">Empanadas de carne (x4)</div>
+            <div class="menu-card-desc">Cortada a cuchillo, cebolla caramelizada y aceitunas. Horneadas en barro.</div>
+            <div class="menu-card-price">$3.200</div>
+          </div>
+          <div class="menu-card">
+            <div class="menu-card-cat">Del mar</div>
+            <div class="menu-card-name">Pulpo a la brasa</div>
+            <div class="menu-card-desc">Pulpo gallego grillado con pimentón ahumado, papas rústicas y alioli de ajo negro.</div>
+            <div class="menu-card-price">$6.400</div>
+          </div>
+          <div class="menu-card">
+            <div class="menu-card-cat">Para compartir</div>
+            <div class="menu-card-name">Tabla de achuras</div>
+            <div class="menu-card-desc">Chorizos, morcilla, mollejas y riñones. Con pan de masa madre de la casa.</div>
+            <div class="menu-card-price">$7.800</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRINCIPALES -->
+      <div style="margin-bottom:36px">
+        <div class="menu-card-cat" style="font-size:0.78rem;letter-spacing:0.18em;margin-bottom:16px;color:var(--ember)">── Principales ──</div>
+        <div class="menu-grid">
+          <div class="menu-card">
+            <div class="menu-card-cat">De la tierra</div>
+            <div class="menu-card-name">Costillar de cerdo</div>
+            <div class="menu-card-desc">6 horas de cocción lenta en horno de barro. Con reducción de malbec y batata asada.</div>
+            <div class="menu-card-price">$11.600</div>
+          </div>
+          <div class="menu-card">
+            <div class="menu-card-cat">Angus premium</div>
+            <div class="menu-card-name">Ojo de bife</div>
+            <div class="menu-card-desc">400g, maduración 28 días. Término a elección. Con papas rústicas y chimichurri.</div>
+            <div class="menu-card-price">$14.200</div>
+          </div>
+          <div class="menu-card">
+            <div class="menu-card-cat">Sin TACC</div>
+            <div class="menu-card-name">Pollo de campo al disco</div>
+            <div class="menu-card-desc">Pollo entero deshuesado con vegetales de temporada y limón al rescoldo.</div>
+            <div class="menu-card-price">$8.800</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GUARNICIONES -->
+      <div style="margin-bottom:36px">
+        <div class="menu-card-cat" style="font-size:0.78rem;letter-spacing:0.18em;margin-bottom:16px;color:var(--ember)">── Guarniciones ──</div>
+        <div class="menu-grid">
+          <div class="menu-card">
+            <div class="menu-card-name">Papas rústicas</div>
+            <div class="menu-card-desc">Con romero, ajo y sal gruesa.</div>
+            <div class="menu-card-price">$1.800</div>
+          </div>
+          <div class="menu-card">
+            <div class="menu-card-name">Ensalada de rúcula</div>
+            <div class="menu-card-desc">Con parmesano, nueces y vinagreta de mostaza antigua.</div>
+            <div class="menu-card-price">$1.600</div>
+          </div>
+          <div class="menu-card">
+            <div class="menu-card-name">Puré rústico</div>
+            <div class="menu-card-desc">Papa, manteca y ciboulette. Preparación artesanal.</div>
+            <div class="menu-card-price">$1.400</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BEBIDAS Y POSTRES -->
+      <div>
+        <div class="menu-card-cat" style="font-size:0.78rem;letter-spacing:0.18em;margin-bottom:16px;color:var(--ember)">── Bebidas y postres ──</div>
+        <div class="menu-grid">
+          <div class="menu-card">
+            <div class="menu-card-cat">Vinos</div>
+            <div class="menu-card-name">Carta de vinos</div>
+            <div class="menu-card-desc">Selección de bodegas de Mendoza y San Juan. Consultar al sommelier.</div>
+            <div class="menu-card-price">Desde $4.200</div>
+          </div>
+          <div class="menu-card">
+            <div class="menu-card-cat">Postre</div>
+            <div class="menu-card-name">Flan de vainilla</div>
+            <div class="menu-card-desc">Casero, con dulce de leche artesanal y crema chantilly.</div>
+            <div class="menu-card-price">$2.200</div>
+          </div>
+          <div class="menu-card">
+            <div class="menu-card-cat">Digestivo</div>
+            <div class="menu-card-name">Tabla de quesos</div>
+            <div class="menu-card-desc">Selección de tres quesos artesanales con membrillo y tostadas de centeno.</div>
+            <div class="menu-card-price">$4.600</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -1183,6 +1294,21 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ── TOAST ──
+function toggleMenuCompleto(btn) {
+  const completo = document.getElementById('menuCompleto');
+  const visible = completo.style.display !== 'none';
+  if (visible) {
+    completo.style.display = 'none';
+    btn.textContent = 'Menú completo →';
+  } else {
+    completo.style.display = 'block';
+    btn.textContent = '← Ver menos';
+    setTimeout(() => completo.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+    // Trigger reveal on new cards
+    completo.querySelectorAll('.menu-card').forEach(el => el.classList.add('visible'));
+  }
+}
+
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
