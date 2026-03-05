@@ -1062,7 +1062,7 @@ footer {
           <div class="info-icon">📞</div>
           <div>
             <div class="info-label">Reservas</div>
-            <div class="info-value">+54 341 555-0124<br>reservas@carbon-rosario.com</div>
+            <div class="info-value">+54 341 555-0124<br><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="61130412041317001221020013030e0f4c130e120013080e4f020e0c">[email&#160;protected]</a></div>
           </div>
         </div>
         <div class="info-item">
@@ -1080,11 +1080,7 @@ footer {
           </div>
         </div>
       </div>
-      <div class="mapa-placeholder reveal">
-        <div class="mapa-pin">📍</div>
-        <span>Córdoba 1240, Rosario</span>
-        <span style="font-size:0.62rem;opacity:0.6">Integrá Google Maps con tu API key</span>
-      </div>
+      <div id="mapa" class="reveal" style="height:380px;border:1px solid var(--border);"></div>
     </div>
   </div>
 </section>
@@ -1095,14 +1091,14 @@ footer {
     <div class="footer-inner">
       <div class="footer-logo">Carbón</div>
       <div class="footer-copy">© 2026 Carbón Cocina de Fuego. Rosario, Argentina.</div>
-      <div class="footer-dev">Sitio desarrollado por <a href="mailto:vemiliano220@gmail.com">Emiliano Vega</a></div>
+      <div class="footer-dev">Sitio desarrollado por <a href="/cdn-cgi/l/email-protection#eb9d8e868287828a8584d9d9dbab8c868a8287c5888486">Emiliano Vega</a></div>
     </div>
   </div>
 </footer>
 
 <div class="toast" id="toast"></div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── NAV SCROLL ──
 window.addEventListener('scroll', () => {
   document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
@@ -1157,6 +1153,33 @@ function showToast(msg) {
   t.textContent = msg;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 3000);
+  
+}
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDa6hKgbAZi_LkbhaoywprI0eBtmoeZ8Uo&callback=initMap" async defer></script>
+<script>
+  function initMap() {
+  const ubicacion = { lat:-32.946032, lng: -60.640860 };
+  const map = new google.maps.Map(document.getElementById('mapa'), {
+    zoom: 16,
+    center: ubicacion,
+    styles: [
+      { elementType: 'geometry', stylers: [{ color: '#1a1816' }] },
+      { elementType: 'labels.text.fill', stylers: [{ color: '#c9a84c' }] },
+      { elementType: 'labels.text.stroke', stylers: [{ color: '#1a1816' }] },
+      { featureType: 'road', elementType: 'geometry', stylers: [{ color: '#2e2a26' }] },
+      { featureType: 'road', elementType: 'geometry.stroke', stylers: [{ color: '#111010' }] },
+      { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#080706' }] },
+      { featureType: 'poi', stylers: [{ visibility: 'off' }] },
+    ]
+  });
+  new google.maps.Marker({
+    position: ubicacion,
+    map,
+    title: 'Carbón — Cocina de Fuego',
+    
+  });
 }
 </script>
 </body>
