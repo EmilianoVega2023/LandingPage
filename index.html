@@ -880,7 +880,7 @@ footer {
         <div class="section-label">Carta</div>
         <h2 class="section-title">Lo que <em>sale del fuego</em></h2>
       </div>
-      <a href="#" class="btn-ghost" style="white-space:nowrap">Menú completo →</a>
+      <a href="#menu" class="btn-ghost" style="white-space:nowrap">Menú completo →</a>
     </div>
     <div class="menu-grid">
       <div class="menu-card reveal">
@@ -940,24 +940,25 @@ footer {
         </div>
       </div>
       <div class="reveal">
+        <form id="reservaForm" action="https://formspree.io/f/mykngklv" method="POST">
         <div class="form-row">
           <div class="form-group">
             <label>Nombre</label>
-            <input type="text" placeholder="Tu nombre">
+            <input type="text" name="nombre" placeholder="Tu nombre" required>
           </div>
           <div class="form-group">
             <label>Apellido</label>
-            <input type="text" placeholder="Tu apellido">
+            <input type="text" name="apellido" placeholder="Tu apellido" required>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
             <label>Fecha</label>
-            <input type="date">
+            <input type="date" name="fecha" required>
           </div>
           <div class="form-group">
             <label>Hora</label>
-            <select>
+            <select name="hora">
               <option>20:00</option>
               <option>20:30</option>
               <option>21:00</option>
@@ -969,7 +970,7 @@ footer {
         <div class="form-row">
           <div class="form-group">
             <label>Personas</label>
-            <select>
+            <select name="personas">
               <option>1 persona</option>
               <option>2 personas</option>
               <option>3 personas</option>
@@ -980,12 +981,12 @@ footer {
           </div>
           <div class="form-group">
             <label>Teléfono</label>
-            <input type="tel" placeholder="+54 341...">
+            <input type="tel" name="telefono" placeholder="+54 341...">
           </div>
         </div>
         <div class="form-group">
           <label>Ocasión especial</label>
-          <select>
+          <select name="ocasion">
             <option value="">Ninguna</option>
             <option>Cumpleaños</option>
             <option>Aniversario</option>
@@ -993,7 +994,13 @@ footer {
             <option>Otra</option>
           </select>
         </div>
-        <button class="btn-primary" style="width:100%;margin-top:4px" onclick="submitReserva()">Confirmar reserva</button>
+        <button type="submit" class="btn-primary" style="width:100%;margin-top:4px" id="submitBtn">Confirmar reserva</button>
+        </form>
+        <div id="reservaOk" style="display:none;text-align:center;padding:32px 0;">
+          <div style="font-size:2rem;margin-bottom:12px">✓</div>
+          <div style="font-family:var(--font-display);font-size:1.2rem;margin-bottom:8px">¡Reserva recibida!</div>
+          <div style="color:var(--muted);font-size:0.88rem">Te confirmamos por teléfono dentro de las 24hs.</div>
+        </div>
       </div>
     </div>
   </div>
@@ -1141,11 +1148,39 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 // ── RESERVA ──
 function submitReserva() {
-  const nombre = document.querySelector('input[placeholder="Tu nombre"]').value;
-  const fecha  = document.querySelector('input[type="date"]').value;
-  if (!nombre || !fecha) { showToast('Completá nombre y fecha para continuar'); return; }
-  showToast('✓ Reserva recibida — Te confirmamos por WhatsApp');
+  // Handled by Formspree - this function kept for compatibility
 }
+
+// Formspree AJAX submission
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById('reservaForm');
+  if (!form) return;
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.textContent = 'Enviando...';
+    btn.disabled = true;
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        form.style.display = 'none';
+        document.getElementById('reservaOk').style.display = 'block';
+      } else {
+        btn.textContent = 'Confirmar reserva';
+        btn.disabled = false;
+        showToast('Error al enviar. Intentá de nuevo.');
+      }
+    } catch(err) {
+      btn.textContent = 'Confirmar reserva';
+      btn.disabled = false;
+      showToast('Error de conexión.');
+    }
+  });
+});
 
 // ── TOAST ──
 function showToast(msg) {
